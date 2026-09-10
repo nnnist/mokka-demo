@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mokka — кофейня в Майкопе</title>
+
+    <style>
+        :root {
+            --bg: #12100f;
+            --bg-soft: #1b1715;
+            --card: #211c19;
+            --coffee: #b7794f;
+            --coffee-light: #d9a47d;
+            --cream: #f3e7dc;
+            --muted: #a89b92;
+            --line: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            padding: 28px 0;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--coffee-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .nav-links a {
+            transition: color 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cream);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(18, 16, 15, 0.96) 0%,
+                    rgba(18, 16, 15, 0.72) 45%,
+                    rgba(18, 16, 15, 0.2) 100%
+                ),
+                url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=2000&q=90")
+                center/cover;
+        }
+
+        .hero-content {
+            max-width: 760px;
+            padding-top: 80px;
+        }
+
+        .eyebrow {
+            color: var(--coffee-light);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12px;
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            font-size: clamp(48px, 7vw, 88px);
+            line-height: 1.05;
+            letter-spacing: -3px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .hero p {
+            max-width: 580px;
+            font-size: 19px;
+            color: #d0c4bb;
+            margin-bottom: 38px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 54px;
+            padding: 0 25px;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--coffee-light);
+            color: #1a120e;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background: #ecc09b;
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--cream);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--muted);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* GENERAL */
+
+        section {
+            padding: 110px 0;
+        }
+
+        .section-label {
+            color: var(--coffee-light);
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-size: 12px;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.1;
+            letter-spacing: -2px;
+            max-width: 700px;
+        }
+
+        /* BENEFITS */
+
+        .benefits {
+            background: var(--bg-soft);
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 65px;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .benefit {
+            padding: 40px;
+            min-height: 220px;
+            border-right: 1px solid var(--line);
+        }
+
+        .benefit:last-child {
+            border-right: none;
+        }
+
+        .benefit-number {
+            font-size: 14px;
+            color: var(--coffee);
+            margin-bottom: 35px;
+        }
+
+        .benefit h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .benefit p {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        /* MENU */
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            margin-top: 65px;
+        }
+
+        .menu-column h3 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 18px;
+        }
+
+        .menu-item span:last-child {
+            color: var(--coffee-light);
+            font-size: 16px;
+        }
+
+        /* IMAGE BLOCK */
+
+        .visual-section {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .visual-block {
+            height: 650px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .visual-block img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .visual-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.6),
+                transparent 60%
+            );
+        }
+
+        .visual-text {
+            position: absolute;
+            left: 60px;
+            bottom: 50px;
+            max-width: 600px;
+        }
+
+        .visual-text h2 {
+            font-size: clamp(38px, 5vw, 65px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+
+        /* ABOUT */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 90px;
+            align-items: center;
+        }
+
+        .about-image {
+            height: 550px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .about-image img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-text p {
+            color: var(--muted);
+            font-size: 18px;
+            margin-top: 30px;
+            max-width: 580px;
+        }
+
+        /* CONTACTS */
+
+        .contacts {
+            background: var(--bg-soft);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 70px;
+            align-items: end;
+        }
+
+        .contact-info {
+            margin-top: 45px;
+        }
+
+        .contact-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 18px;
+        }
+
+        .contact-item span {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .contact-action {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .call-btn {
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: var(--coffee-light);
+            color: #21140d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 700;
+            font-size: 17px;
+            transition: transform 0.4s ease, background 0.4s ease;
+        }
+
+        .call-btn:hover {
+            transform: rotate(8deg) scale(1.05);
+            background: #ecc09b;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 35px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ANIMATION */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+            header {
+                padding: 22px 0;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 75px 0;
+            }
+
+            .hero {
+                min-height: 780px;
+                background:
+                    linear-gradient(
+                        0deg,
+                        rgba(18, 16, 15, 0.98),
+                        rgba(18, 16, 15, 0.35)
+                    ),
+                    url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=90")
+                    center/cover;
+            }
+
+            .hero-content {
+                padding-top: 100px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .benefit-grid,
+            .menu-grid,
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefit-grid {
+                margin-top: 40px;
+            }
+
+            .benefit {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+                min-height: auto;
+                padding: 30px 0;
+            }
+
+            .benefit:last-child {
+                border-bottom: none;
+            }
+
+            .menu-grid {
+                gap: 50px;
+                margin-top: 45px;
+            }
+
+            .visual-block {
+                height: 500px;
+                border-radius: 0;
+            }
+
+            .visual-text {
+                left: 25px;
+                bottom: 30px;
+                right: 25px;
+            }
+
+            .about-grid {
+                gap: 40px;
+            }
+
+            .about-image {
+                height: 400px;
+            }
+
+            .contact-action {
+                justify-content: flex-start;
+            }
+
+            .call-btn {
+                width: 160px;
+                height: 160px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container nav">
+            <a href="#" class="logo">Mo<span>kka</span></a>
+
+            <nav class="nav-links">
+                <a href="#menu">Меню</a>
+                <a href="#about">О нас</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+            <div class="container hero-content reveal">
+                <div class="eyebrow">Кофейня в центре Майкопа</div>
+
+                <h1>Mokka — кофе, ради которого хочется вернуться</h1>
+
+                <p>
+                    Авторский кофе, свежая выпечка и уютная атмосфера
+                    в центре Майкопа.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#menu" class="btn btn-primary">
+                        Посмотреть меню
+                    </a>
+
+                    <a href="#contacts" class="btn btn-secondary">
+                        Мы на карте
+                    </a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                Листайте вниз
+            </div>
+        </section>
+
+
+        <!-- BENEFITS -->
+
+        <section class="benefits">
+            <div class="container">
+
+                <div class="reveal">
+                    <div class="section-label">Почему Mokka</div>
+                    <h2 class="section-title">
+                        Простые вещи, которые делают кофе особенным
+                    </h2>
+                </div>
+
+                <div class="benefit-grid">
+
+                    <div class="benefit reveal">
+                        <div class="benefit-number">01</div>
+                        <h3>Зёрна свежей обжарки</h3>
+                        <p>
+                            Выбираем качественное зерно, чтобы каждая чашка
+                            сохраняла насыщенный вкус и аромат.
+                        </p>
+                    </div>
+
+                    <div class="benefit reveal">
+                        <div class="benefit-number">02</div>
+                        <h3>Десерты каждый день</h3>
+                        <p>
+                            Свежая выпечка и любимые десерты, которые идеально
+                            дополняют чашку кофе.
+                        </p>
+                    </div>
+
+                    <div class="benefit reveal">
+                        <div class="benefit-number">03</div>
+                        <h3>Уютная атмосфера</h3>
+                        <p>
+                            Место, где можно спокойно встретиться, поработать
+                            или просто сделать паузу.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MENU -->
+
+        <section id="menu">
+            <div class="container">
+
+                <div class="reveal">
+                    <div class="section-label">Меню</div>
+                    <h2 class="section-title">
+                        То, за чем хочется возвращаться
+                    </h2>
+                </div>
+
+                <div class="menu-grid">
+
+                    <div class="menu-column reveal">
+                        <h3>Кофе</h3>
+
+                        <div class="menu-item">
+                            <span>Эспрессо</span>
+                            <span>150 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Американо</span>
+                            <span>170 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Капучино</span>
+                            <span>220 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Латте</span>
+                            <span>230 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Флэт уайт</span>
+                            <span>240 ₽</span>
+                        </div>
+                    </div>
+
+
+                    <div class="menu-column reveal">
+                        <h3>Десерты</h3>
+
+                        <div class="menu-item">
+                            <span>Чизкейк</span>
+                            <span>280 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Тирамису</span>
+                            <span>300 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span>Круассан</span>
+                            <span>190 ₽</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- VISUAL -->
+
+        <section class="visual-section">
+            <div class="container">
+                <div class="visual-block reveal">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1800&q=90"
+                        alt="Чашка ароматного кофе"
+                    >
+
+                    <div class="visual-overlay"></div>
+
+                    <div class="visual-text">
+                        <div class="section-label">Каждый день</div>
+                        <h2>
+                            Хороший кофе начинается с внимания к деталям
+                        </h2>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section id="about">
+            <div class="container about-grid">
+
+                <div class="about-image reveal">
+                    <img
+                        src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1200&q=90"
+                        alt="Интерьер уютной кофейни"
+                    >
+                </div>
+
+                <div class="about-text reveal">
+                    <div class="section-label">О нас</div>
+
+                    <h2 class="section-title">
+                        Место для хорошего кофе и спокойных разговоров
+                    </h2>
+
+                    <p>
+                        Mokka — небольшая кофейня, где мы объединили хороший
+                        кофе, свежие десерты и атмосферу, в которой хочется
+                        задержаться немного дольше.
+                    </p>
+
+                    <p>
+                        Здесь можно начать утро с любимого напитка, встретиться
+                        с друзьями или просто ненадолго отвлечься от городского
+                        ритма.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- CONTACTS -->
+
+        <section class="contacts" id="contacts">
+            <div class="container contact-grid">
+
+                <div class="reveal">
+
+                    <div class="section-label">Контакты</div>
+
+                    <h2 class="section-title">
+                        Заходите на чашку кофе
+                    </h2>
+
+                    <div class="contact-info">
+
+                        <div class="contact-item">
+                            <span>Адрес</span>
+                            Майкоп, ул. Пушкина, 100
+                        </div>
+
+                        <div class="contact-item">
+                            <span>Время работы</span>
+                            Ежедневно 08:00–22:00
+                        </div>
+
+                        <div class="contact-item">
+                            <span>Телефон</span>
+                            +7 (900) 000-00-00
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="contact-action reveal">
+                    <a href="tel:+79000000000" class="call-btn">
+                        Позвонить<br>нам
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="container footer-content">
+            <div>© 2026 Mokka Coffee</div>
+            <div>Майкоп · Кофе · Десерты</div>
+        </div>
+    </footer>
+
+
+    <script>
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+        document.querySelectorAll(".reveal").forEach((element) => {
+            observer.observe(element);
+        });
+    </script>
+
+</body>
+</html>
