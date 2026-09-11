@@ -818,24 +818,66 @@
     </footer>
 
 
-    <script>
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("active");
-                    }
-                });
-            },
-            {
-                threshold: 0.12
-            }
+<script>
+    // Убираем якорь из адреса при загрузке страницы
+    if (window.location.hash) {
+        history.replaceState(
+            null,
+            null,
+            window.location.pathname + window.location.search
         );
 
-        document.querySelectorAll(".reveal").forEach((element) => {
-            observer.observe(element);
+        window.scrollTo(0, 0);
+    }
+
+    // Плавная прокрутка без добавления #services, #contacts и других якорей в URL
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", function(event) {
+            const targetId = this.getAttribute("href");
+
+            // Если ссылка просто "#", ничего не делаем
+            if (targetId === "#") {
+                event.preventDefault();
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+                return;
+            }
+
+            const target = document.querySelector(targetId);
+
+            if (target) {
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
         });
-    </script>
+    });
+
+    // Анимации появления элементов при прокрутке
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+    document.querySelectorAll(".reveal").forEach((element) => {
+        observer.observe(element);
+    });
+</script>
 
 </body>
 </html>
